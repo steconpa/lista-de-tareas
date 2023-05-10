@@ -88,13 +88,18 @@ function handleListItemClick(event) {
   if (!listItem) return;
 
   const completed = listItem.dataset.completed === "true";
-  listItem.dataset.completed = !completed;
 
-  if (completed) {
-    handleCompletedListItem(listItem);
-  } else {
-    handleToDoListItem(listItem);
-  }
+     // Verificar si el contenido de la tarea no está vacío
+    if (listItem.textContent.trim() !== "") {
+      // Actualizar el estado completado solo si la tarea no está vacía
+      listItem.dataset.completed = !completed;
+
+      if (completed) {
+        handleCompletedListItem(listItem);
+      } else {
+        handleToDoListItem(listItem);
+      }
+    }
 }
 
 function handleCompletedListItem(listItem) {
