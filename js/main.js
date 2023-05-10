@@ -1,9 +1,11 @@
+const instructionsParagraph = document.querySelector('.instructions p');
+
 if (/Mobi/.test(navigator.userAgent)) {
   // Está en un dispositivo móvil
-  document.querySelector('.instructions p').textContent = 'Toca para editar, desliza hacia la derecha para marcar o desmarcar como completado. ¡Manos a la obra!';
+  instructionsParagraph.textContent = 'Toca para editar, desliza hacia la derecha para marcar o desmarcar como completado. ¡Manos a la obra!';
 } else {
-  // Está en un navegador de escritorio
-  document.querySelector('.instructions p').textContent = 'Un clic para editar, doble clic para marcar o desmarcar como completado. ¡Manos a la obra!';
+    // Está en un navegador de escritorio
+    instructionsParagraph.textContent = 'Un clic para editar, doble clic para marcar o desmarcar como completado. ¡Manos a la obra!';
 }
 
 // Obtener elementos del DOM
@@ -35,12 +37,11 @@ function handleSingleClick(event) {
   const listItem = event.target.closest("li");
   if (!listItem) return;
 
-  // Verificar si el contenido del li es "Nueva Tarea"
-  if (listItem.textContent === "Nueva tarea") {
-    // Borrar contenido del li
+  const originalContent = "Nueva tarea";
+  if (listItem.textContent.trim() === originalContent) {
     listItem.textContent = "";
-  }else if (listItem.textContent === ""){
-    listItem.textContent = "Nueva tarea";
+  } else if (listItem.textContent.trim() === "") {
+    listItem.textContent = originalContent;
   }
 }
 
@@ -66,11 +67,15 @@ function handleTouchEnd(event) {
 
   if (distance > 0) {
     const completed = listItem.dataset.completed === "true";
-    listItem.dataset.completed = !completed;
-    if (completed) {
-      handleCompletedListItem(listItem);
-    } else {
-      handleToDoListItem(listItem);
+     // Verificar si el contenido de la tarea no está vacío
+     if (listItem.textContent.trim() !== "") {
+      // Actualizar el estado completado solo si la tarea no está vacía
+      listItem.dataset.completed = !completed;
+      if (completed) {
+        handleCompletedListItem(listItem);
+      } else {
+        handleToDoListItem(listItem);
+      }
     }
   }
 
@@ -93,7 +98,6 @@ function handleListItemClick(event) {
     if (listItem.textContent.trim() !== "") {
       // Actualizar el estado completado solo si la tarea no está vacía
       listItem.dataset.completed = !completed;
-
       if (completed) {
         handleCompletedListItem(listItem);
       } else {
