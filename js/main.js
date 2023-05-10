@@ -1,3 +1,11 @@
+if (/Mobi/.test(navigator.userAgent)) {
+  // Está en un dispositivo móvil
+  document.querySelector('.instructions p').textContent = 'Toca para editar, desliza hacia la derecha para marcar o desmarcar como completado. ¡Manos a la obra!';
+} else {
+  // Está en un navegador de escritorio
+  document.querySelector('.instructions p').textContent = 'Un clic para editar, doble clic para marcar o desmarcar como completado. ¡Manos a la obra!';
+}
+
 // Obtener elementos del DOM
 const toDoList = document.querySelector('ul[name="to-do-list"]');
 const completedTaskList = document.querySelector('ul[name="completed-task"]');
