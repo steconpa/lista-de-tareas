@@ -17,6 +17,7 @@ let initialX = null;
 let currentX = null;
 
 // Event listeners
+toDoList.addEventListener("click", handleSingleClick);
 toDoList.addEventListener("dblclick", handleListItemClick);
 toDoList.addEventListener('touchstart', handleTouchStart);
 toDoList.addEventListener('touchmove', handleTouchMove);
@@ -30,6 +31,19 @@ completedTaskList.addEventListener('touchend', handleTouchEnd);
 addItemButton.addEventListener("click", addListItem);
 
 // Funciones de manejo de eventos
+function handleSingleClick(event) {
+  const listItem = event.target.closest("li");
+  if (!listItem) return;
+
+  // Verificar si el contenido del li es "Nueva Tarea"
+  if (listItem.textContent === "Nueva tarea") {
+    // Borrar contenido del li
+    listItem.textContent = "";
+  }else if (listItem.textContent === ""){
+    listItem.textContent = "Nueva tarea";
+  }
+}
+
 function handleTouchStart(event) {
   initialX = event.touches[0].clientX;
 }
@@ -87,7 +101,6 @@ function handleCompletedListItem(listItem) {
   const deleteButton = listItem.querySelector(".delete-button");
   if (deleteButton) deleteButton.remove();
 
-  listItem.removeAttribute("contenteditable");
   toDoList.appendChild(listItem);
   listItem.setAttribute("contenteditable", true);
 }
